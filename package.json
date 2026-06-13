@@ -1,0 +1,22 @@
+{
+  "name": "amirtha-knits-management-system",
+  "version": "1.0.0",
+  "description": "Industrial management dashboard for Amirtha Knits knitting units",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "knitting",
+    "manufacturing",
+    "dashboard",
+    "management"
+  ],
+  "author": "Amirtha Knits Admin",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^5.2.0"
+  }
+}

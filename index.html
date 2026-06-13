@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amirtha Knits - Management System</title>
+  <!-- Google Fonts: Inter for general text, Outfit for metrics & branding -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- 1. LOGIN CONTAINER -->
+  <div class="login-container" id="login-container">
+    <div class="login-card">
+      <div class="login-brand">
+        <i data-lucide="layers" class="brand-icon"></i>
+        <h1>Amirtha Knits</h1>
+        <p>Manufacturing Management Suite</p>
+      </div>
+      
+      <form id="login-form">
+        <div class="form-group">
+          <label class="form-label" for="login-username">Username</label>
+          <div class="input-with-icon">
+            <i data-lucide="user"></i>
+            <input type="text" id="login-username" class="form-input" placeholder="Enter username" required autocomplete="username">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="login-password">Password</label>
+          <div class="input-with-icon">
+            <i data-lucide="lock"></i>
+            <input type="password" id="login-password" class="form-input" placeholder="Enter password" required autocomplete="current-password">
+          </div>
+        </div>
+
+        <div class="login-options">
+          <label class="checkbox-label">
+            <input type="checkbox" id="login-remember">
+            <span>Remember Me</span>
+          </label>
+        </div>
+
+        <div id="login-error" class="login-error-msg" style="display: none;">
+          <i data-lucide="alert-circle"></i>
+          <span>Invalid username or password.</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary login-btn">
+          <span>Secure Sign In</span>
+          <i data-lucide="arrow-right"></i>
+        </button>
+      </form>
+      
+      <div class="login-hint">
+        <p>Hint: Use username <strong>admin</strong> and password <strong>admin123</strong> to login.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. MAIN APPLICATION CONTAINER -->
+  <div class="app-container" id="app-container" style="display: none;">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <i data-lucide="layers" class="logo-icon"></i>
+          <span>Amirtha Knits</span>
+        </div>
+        <button class="sidebar-close-btn" id="sidebar-close-btn">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      
+      <div class="sidebar-sub-title">Owner Controls</div>
+      
+      <nav class="sidebar-nav">
+        <ul>
+          <li>
+            <a href="#" class="nav-link active" data-view="dashboard">
+              <i data-lucide="layout-dashboard"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-view="orders">
+              <i data-lucide="shopping-bag"></i>
+              <span>Orders</span>
+              <span class="badge badge-accent" id="nav-order-count">0</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-view="production">
+              <i data-lucide="activity"></i>
+              <span>Production</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link" data-view="profile">
+              <i data-lucide="user-cog"></i>
+              <span>Profile</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link logout-link" id="sidebar-logout">
+              <i data-lucide="log-out"></i>
+              <span>Logout</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="owner-status">
+          <div class="user-avatar" id="sidebar-avatar">AG</div>
+          <div class="user-info">
+            <div class="user-name" id="sidebar-owner-name">Amirtha Ganesan</div>
+            <div class="user-role" id="sidebar-company-name">Amirtha Knits</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Navbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="sidebar-toggle-btn" id="sidebar-toggle-btn">
+            <i data-lucide="menu"></i>
+          </button>
+          <h2 class="view-header-title" id="page-title">Dashboard</h2>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Live Clock -->
+          <div class="system-time">
+            <i data-lucide="clock" class="time-icon"></i>
+            <span id="current-time-str">13-06-2026 21:03:59</span>
+          </div>
+
+          <!-- Quick Action -->
+          <button class="btn btn-primary btn-sm" id="btn-quick-order">
+            <i data-lucide="plus"></i>
+            <span>New Order</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- View Containers -->
+      <div class="view-viewport">
+        <!-- DASHBOARD VIEW -->
+        <section id="view-dashboard" class="app-view active"></section>
+
+        <!-- ORDERS VIEW -->
+        <section id="view-orders" class="app-view"></section>
+
+        <!-- PRODUCTION VIEW -->
+        <section id="view-production" class="app-view"></section>
+
+        <!-- PROFILE VIEW -->
+        <section id="view-profile" class="app-view"></section>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Global Modal Dialog Overlay -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="modal-title">Modal Title</h2>
+        <button class="modal-close-btn" id="modal-close-btn">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <!-- Injected Forms -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Core App Logic Scripts -->
+  <script type="module" src="js/data.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
