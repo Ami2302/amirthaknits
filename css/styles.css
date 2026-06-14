@@ -419,7 +419,7 @@ body.light-mode .branding-bg-lines {
   width: 100%;
 }
 
-.input-with-icon i, .input-with-icon svg {
+.input-with-icon > i, .input-with-icon > svg {
   position: absolute;
   left: 14px;
   top: 50%;
