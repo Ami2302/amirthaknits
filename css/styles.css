@@ -645,9 +645,16 @@ body.light-mode .mobile-logo-svg path:last-child {
     grid-template-columns: 1fr;
     max-width: 460px;
     min-height: auto;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
   }
   .auth-branding {
     display: none;
+  }
+  .auth-form-container {
+    padding: 24px 12px;
   }
   .mobile-brand-header {
     display: flex;
