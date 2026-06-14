@@ -5,7 +5,9 @@ import {
   getDB, 
   getProfile,
   getOrders,
-  addOrder
+  addOrder,
+  registerProfile,
+  updateTheme
 } from './data.js';
 
 // Import Simplified View Renderers
@@ -86,6 +88,124 @@ function initAuthEvents() {
   const errorMsg = document.getElementById('login-error');
   const logoutBtn = document.getElementById('sidebar-logout');
 
+  // Screen Switching
+  const gotoSignup = document.getElementById('goto-signup');
+  const gotoLogin = document.getElementById('goto-login');
+  const loginScreen = document.getElementById('login-screen');
+  const signupScreen = document.getElementById('signup-screen');
+  const usernameFeedback = document.getElementById('username-feedback');
+  const strengthContainer = document.getElementById('password-strength-container');
+
+  const resetSignUpValidationFeedbacks = () => {
+    if (usernameFeedback) usernameFeedback.style.display = 'none';
+    if (strengthContainer) strengthContainer.style.display = 'none';
+    document.getElementById('login-error').style.display = 'none';
+    document.getElementById('signup-error').style.display = 'none';
+  };
+
+  if (gotoSignup && gotoLogin) {
+    gotoSignup.addEventListener('click', (e) => {
+      e.preventDefault();
+      loginScreen.style.display = 'none';
+      signupScreen.style.display = 'block';
+      resetSignUpValidationFeedbacks();
+    });
+
+    gotoLogin.addEventListener('click', (e) => {
+      e.preventDefault();
+      signupScreen.style.display = 'none';
+      loginScreen.style.display = 'block';
+      resetSignUpValidationFeedbacks();
+    });
+  }
+
+  // Password Show/Hide Toggle
+  const passwordToggles = document.querySelectorAll('.password-toggle-btn');
+  passwordToggles.forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const input = toggle.previousElementSibling;
+      const eyeIcon = toggle.querySelector('.eye-icon');
+      const eyeOffIcon = toggle.querySelector('.eye-off-icon');
+
+      if (input.type === 'password') {
+        input.type = 'text';
+        if (eyeIcon) eyeIcon.style.display = 'none';
+        if (eyeOffIcon) eyeOffIcon.style.display = 'inline-block';
+      } else {
+        input.type = 'password';
+        if (eyeIcon) eyeIcon.style.display = 'inline-block';
+        if (eyeOffIcon) eyeOffIcon.style.display = 'none';
+      }
+    });
+  });
+
+  // Username Availability Check
+  const usernameInput = document.getElementById('signup-username');
+  if (usernameInput && usernameFeedback) {
+    usernameInput.addEventListener('input', () => {
+      const val = usernameInput.value.trim();
+      if (val.length === 0) {
+        usernameFeedback.style.display = 'none';
+        return;
+      }
+      const profile = getProfile();
+      // Simple UI-only simulation checking if matches existing administrator username
+      if (val.toLowerCase() === profile.username.toLowerCase()) {
+        usernameFeedback.style.display = 'block';
+        usernameFeedback.style.color = 'var(--color-danger)';
+        usernameFeedback.innerText = 'Username is already taken';
+      } else {
+        usernameFeedback.style.display = 'block';
+        usernameFeedback.style.color = 'var(--color-success)';
+        usernameFeedback.innerText = 'Username is available';
+      }
+    });
+  }
+
+  // Password Strength Indicator
+  const passwordInput = document.getElementById('signup-password');
+  const strengthBar = document.getElementById('password-strength-bar');
+  const strengthLabel = document.getElementById('password-strength-label');
+
+  if (passwordInput && strengthContainer && strengthBar && strengthLabel) {
+    passwordInput.addEventListener('input', () => {
+      const val = passwordInput.value;
+      if (val.length === 0) {
+        strengthContainer.style.display = 'none';
+        return;
+      }
+
+      strengthContainer.style.display = 'block';
+      let score = 0;
+      if (val.length >= 6) score++;
+      if (val.length >= 8) score++;
+      if (/[0-9]/.test(val)) score++;
+      if (/[A-Z]/.test(val) || /[^A-Za-z0-9]/.test(val)) score++;
+
+      if (score <= 1) {
+        strengthBar.style.width = '25%';
+        strengthBar.style.backgroundColor = 'var(--color-danger)';
+        strengthLabel.innerText = 'Password Strength: Weak';
+        strengthLabel.style.color = 'var(--color-danger)';
+      } else if (score === 2) {
+        strengthBar.style.width = '50%';
+        strengthBar.style.backgroundColor = 'var(--color-warning)';
+        strengthLabel.innerText = 'Password Strength: Medium';
+        strengthLabel.style.color = 'var(--color-warning)';
+      } else if (score === 3) {
+        strengthBar.style.width = '75%';
+        strengthBar.style.backgroundColor = 'var(--color-info)';
+        strengthLabel.innerText = 'Password Strength: Good';
+        strengthLabel.style.color = 'var(--color-info)';
+      } else if (score === 4) {
+        strengthBar.style.width = '100%';
+        strengthBar.style.backgroundColor = 'var(--color-success)';
+        strengthLabel.innerText = 'Password Strength: Strong';
+        strengthLabel.style.color = 'var(--color-success)';
+      }
+    });
+  }
+
   // Handle Login Submit
   loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -115,6 +235,63 @@ function initAuthEvents() {
     }
   });
 
+  // Handle Sign Up Submit
+  const signupForm = document.getElementById('signup-form');
+  const signupError = document.getElementById('signup-error');
+  const signupErrorText = document.getElementById('signup-error-text');
+  const signupSuccess = document.getElementById('signup-success');
+
+  if (signupForm) {
+    signupForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const fullName = document.getElementById('signup-fullname').value.trim();
+      const phone = document.getElementById('signup-phone').value.trim();
+      const username = document.getElementById('signup-username').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value;
+      const confirmPassword = document.getElementById('signup-confirm-password').value;
+
+      signupError.style.display = 'none';
+      signupSuccess.style.display = 'none';
+
+      // Passwords match validation
+      if (password !== confirmPassword) {
+        signupErrorText.innerText = "Passwords do not match.";
+        signupError.style.display = 'flex';
+        return;
+      }
+
+      // Password length check
+      if (password.length < 6) {
+        signupErrorText.innerText = "Password must be at least 6 characters.";
+        signupError.style.display = 'flex';
+        return;
+      }
+
+      // Double check availability
+      const profile = getProfile();
+      if (username.toLowerCase() === profile.username.toLowerCase()) {
+        signupErrorText.innerText = "Username is already taken.";
+        signupError.style.display = 'flex';
+        return;
+      }
+
+      // Save credentials & phone
+      registerProfile(fullName, username, email, password, phone);
+
+      signupSuccess.style.display = 'flex';
+      signupForm.reset();
+      resetSignUpValidationFeedbacks();
+
+      setTimeout(() => {
+        signupScreen.style.display = 'none';
+        loginScreen.style.display = 'block';
+        signupSuccess.style.display = 'none';
+        document.getElementById('login-username').value = username;
+      }, 1500);
+    });
+  }
+
   // Handle Logout
   logoutBtn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -123,6 +300,9 @@ function initAuthEvents() {
     localStorage.removeItem('amirtha_knits_remember');
     showLoginPortal();
   });
+
+  // Handle Theme Toggle Clicks
+  initThemeToggles();
 }
 
 function updateOwnerBranding() {
@@ -227,6 +407,49 @@ export function applyTheme() {
     document.body.classList.add('light-mode');
   } else {
     document.body.classList.remove('light-mode');
+  }
+  updateThemeToggleUI(profile.theme);
+}
+
+function updateThemeToggleUI(theme) {
+  const portalToggle = document.getElementById('portal-theme-toggle');
+  const topbarToggle = document.getElementById('topbar-theme-toggle');
+
+  [portalToggle, topbarToggle].forEach(btn => {
+    if (!btn) return;
+    const sunIcon = btn.querySelector('.theme-icon-sun');
+    const moonIcon = btn.querySelector('.theme-icon-moon');
+    if (theme === 'light') {
+      if (sunIcon) sunIcon.style.display = 'none';
+      if (moonIcon) moonIcon.style.display = 'inline-block';
+    } else {
+      if (sunIcon) sunIcon.style.display = 'inline-block';
+      if (moonIcon) moonIcon.style.display = 'none';
+    }
+  });
+}
+
+function initThemeToggles() {
+  const portalToggle = document.getElementById('portal-theme-toggle');
+  const topbarToggle = document.getElementById('topbar-theme-toggle');
+
+  const handleToggle = () => {
+    const profile = getProfile();
+    const nextTheme = profile.theme === 'light' ? 'dark' : 'light';
+    updateTheme(nextTheme);
+    applyTheme();
+  };
+
+  if (portalToggle) {
+    // Clone to prevent duplicate listeners
+    const newToggle = portalToggle.cloneNode(true);
+    portalToggle.parentNode.replaceChild(newToggle, portalToggle);
+    newToggle.addEventListener('click', handleToggle);
+  }
+  if (topbarToggle) {
+    const newToggle = topbarToggle.cloneNode(true);
+    topbarToggle.parentNode.replaceChild(newToggle, topbarToggle);
+    newToggle.addEventListener('click', handleToggle);
   }
 }
 

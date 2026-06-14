@@ -17,52 +17,236 @@
 </head>
 <body>
 
-  <!-- 1. LOGIN CONTAINER -->
+  <!-- 1. LOGIN & SIGNUP PORTAL CONTAINER -->
   <div class="login-container" id="login-container">
-    <div class="login-card">
-      <div class="login-brand">
-        <i data-lucide="layers" class="brand-icon"></i>
-        <h1>Amirtha Knits</h1>
-        <p>Manufacturing Management Suite</p>
+    <!-- Floating Global Theme Toggle -->
+    <button class="theme-toggle-btn" id="portal-theme-toggle" aria-label="Toggle Theme">
+      <i data-lucide="sun" class="theme-icon-sun"></i>
+      <i data-lucide="moon" class="theme-icon-moon" style="display: none;"></i>
+    </button>
+
+    <div class="auth-card">
+      <!-- Left Branding Panel (Desktop Only) -->
+      <div class="auth-branding">
+        <div class="branding-logo-wrapper">
+          <svg class="branding-logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="brand-blue-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#3b82f6" />
+                <stop offset="100%" stop-color="#06b6d4" />
+              </linearGradient>
+              <linearGradient id="brand-white-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ffffff" />
+                <stop offset="100%" stop-color="#cbd5e1" />
+              </linearGradient>
+            </defs>
+            <path d="M 30,50 C 30,25 45,20 50,45 C 55,70 70,75 70,50 C 70,25 55,20 50,45 C 45,70 30,75 30,50 Z" stroke="url(#brand-blue-grad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+            <path d="M 50,15 C 65,30 65,50 50,65 C 35,50 35,30 50,15 Z" stroke="url(#brand-white-grad)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          </svg>
+        </div>
+        <div class="branding-text">
+          <span class="branding-welcome">Welcome to</span>
+          <h1 class="branding-title">Amirtha Knits</h1>
+          <p class="branding-subtitle">Production & Order Management System</p>
+          
+          <div class="branding-units">
+            <div class="unit-badge">
+              <i data-lucide="map-pin"></i>
+              <span>Avinashi Unit • Aadukalam Unit</span>
+            </div>
+            <div class="unit-badge">
+              <i data-lucide="cpu"></i>
+              <span>37 Knitting Machines</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Professional Feature list card -->
+        <div class="branding-features-card">
+          <div class="feature-item">
+            <i data-lucide="check" class="feature-icon"></i>
+            <span>Manage Customer Orders</span>
+          </div>
+          <div class="feature-item">
+            <i data-lucide="check" class="feature-icon"></i>
+            <span>Track Production Progress</span>
+          </div>
+          <div class="feature-item">
+            <i data-lucide="check" class="feature-icon"></i>
+            <span>Monitor Machine Performance</span>
+          </div>
+          <div class="feature-item">
+            <i data-lucide="check" class="feature-icon"></i>
+            <span>Manage Deliveries</span>
+          </div>
+          <div class="feature-item">
+            <i data-lucide="check" class="feature-icon"></i>
+            <span>View Business Insights</span>
+          </div>
+        </div>
+
+        <!-- Decorative subtle geometric background element -->
+        <div class="branding-bg-lines"></div>
       </div>
-      
-      <form id="login-form">
-        <div class="form-group">
-          <label class="form-label" for="login-username">Username</label>
-          <div class="input-with-icon">
-            <i data-lucide="user"></i>
-            <input type="text" id="login-username" class="form-input" placeholder="Enter username" required autocomplete="username">
-          </div>
-        </div>
+
+      <!-- Right Form Panel -->
+      <div class="auth-form-container">
         
-        <div class="form-group">
-          <label class="form-label" for="login-password">Password</label>
-          <div class="input-with-icon">
-            <i data-lucide="lock"></i>
-            <input type="password" id="login-password" class="form-input" placeholder="Enter password" required autocomplete="current-password">
+        <!-- Mobile Logo Header (Hidden on Desktop) -->
+        <div class="mobile-brand-header">
+          <svg class="mobile-logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 30,50 C 30,25 45,20 50,45 C 55,70 70,75 70,50 C 70,25 55,20 50,45 C 45,70 30,75 30,50 Z" stroke="#3b82f6" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+            <path d="M 50,15 C 65,30 65,50 50,65 C 35,50 35,30 50,15 Z" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          </svg>
+          <h2>Amirtha Knits</h2>
+          <p>Production & Order Management System</p>
+          <div class="mobile-units">Avinashi Unit • Aadukalam Unit | 37 Machines</div>
+        </div>
+
+        <!-- LOGIN SCREEN -->
+        <div class="auth-screen active" id="login-screen">
+          <div class="auth-header">
+            <h3>Sign In</h3>
+            <p>Access your company dashboard</p>
+          </div>
+
+          <form id="login-form">
+            <div class="form-group">
+              <label class="form-label" for="login-username">Username</label>
+              <div class="input-with-icon">
+                <i data-lucide="user"></i>
+                <input type="text" id="login-username" class="form-input" placeholder="Enter username" required autocomplete="username">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="login-password">Password</label>
+              <div class="input-with-icon">
+                <i data-lucide="lock"></i>
+                <input type="password" id="login-password" class="form-input" placeholder="Enter password" required autocomplete="current-password">
+                <button type="button" class="password-toggle-btn" tabindex="-1" aria-label="Toggle Password Visibility">
+                  <i data-lucide="eye" class="eye-icon"></i>
+                  <i data-lucide="eye-off" class="eye-off-icon" style="display: none;"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="login-options">
+              <label class="checkbox-label">
+                <input type="checkbox" id="login-remember">
+                <span>Remember Me</span>
+              </label>
+            </div>
+
+            <div id="login-error" class="login-error-msg" style="display: none;">
+              <i data-lucide="alert-circle"></i>
+              <span>Invalid username or password.</span>
+            </div>
+
+            <button type="submit" class="btn btn-primary login-btn">
+              <span>Secure Sign In</span>
+              <i data-lucide="arrow-right"></i>
+            </button>
+          </form>
+
+          <div class="auth-navigation">
+            <p>New User? <a href="#" id="goto-signup">Create Account</a></p>
           </div>
         </div>
 
-        <div class="login-options">
-          <label class="checkbox-label">
-            <input type="checkbox" id="login-remember">
-            <span>Remember Me</span>
-          </label>
+        <!-- SIGN UP SCREEN -->
+        <div class="auth-screen" id="signup-screen" style="display: none;">
+          <div class="auth-header">
+            <h3>Create Account</h3>
+            <p>Register a new dashboard account</p>
+          </div>
+
+          <form id="signup-form">
+            <div class="form-group">
+              <label class="form-label" for="signup-fullname">Full Name</label>
+              <div class="input-with-icon">
+                <i data-lucide="user-plus"></i>
+                <input type="text" id="signup-fullname" class="form-input" placeholder="Enter your full name" required autocomplete="name">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="signup-phone">Phone Number</label>
+              <div class="input-with-icon">
+                <i data-lucide="phone"></i>
+                <input type="tel" id="signup-phone" class="form-input" placeholder="Enter phone number (e.g. +91 94437 12345)" required autocomplete="tel">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="signup-email">Email Address</label>
+              <div class="input-with-icon">
+                <i data-lucide="mail"></i>
+                <input type="email" id="signup-email" class="form-input" placeholder="Enter your email" required autocomplete="email">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="signup-username">Username</label>
+              <div class="input-with-icon">
+                <i data-lucide="user"></i>
+                <input type="text" id="signup-username" class="form-input" placeholder="Choose a username" required autocomplete="username">
+              </div>
+              <div id="username-feedback" class="form-feedback" style="display: none; margin-top: 4px; font-size: 11px; font-weight: 600;"></div>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="signup-password">Password</label>
+              <div class="input-with-icon">
+                <i data-lucide="lock"></i>
+                <input type="password" id="signup-password" class="form-input" placeholder="Create a password" required autocomplete="new-password">
+                <button type="button" class="password-toggle-btn" tabindex="-1" aria-label="Toggle Password Visibility">
+                  <i data-lucide="eye" class="eye-icon"></i>
+                  <i data-lucide="eye-off" class="eye-off-icon" style="display: none;"></i>
+                </button>
+              </div>
+              <!-- Password Strength Bar Container -->
+              <div class="password-strength-container" id="password-strength-container" style="display: none; margin-top: 6px;">
+                <div class="strength-bar-track">
+                  <div class="strength-bar" id="password-strength-bar"></div>
+                </div>
+                <span class="strength-label" id="password-strength-label">Password Strength: Weak</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="signup-confirm-password">Confirm Password</label>
+              <div class="input-with-icon">
+                <i data-lucide="shield-check"></i>
+                <input type="password" id="signup-confirm-password" class="form-input" placeholder="Confirm your password" required autocomplete="new-password">
+                <button type="button" class="password-toggle-btn" tabindex="-1" aria-label="Toggle Password Visibility">
+                  <i data-lucide="eye" class="eye-icon"></i>
+                  <i data-lucide="eye-off" class="eye-off-icon" style="display: none;"></i>
+                </button>
+              </div>
+            </div>
+
+            <div id="signup-error" class="login-error-msg" style="display: none;">
+              <i data-lucide="alert-circle"></i>
+              <span id="signup-error-text">Passwords do not match.</span>
+            </div>
+
+            <div id="signup-success" style="display: none; align-items: center; gap: 8px; background-color: var(--color-success-bg); border: 1px solid var(--color-success-border); padding: 10px 14px; border-radius: var(--radius-md); color: var(--color-success); font-size: 12px; font-weight: 500; margin-bottom: 18px;">
+              <i data-lucide="check-circle"></i>
+              <span>Account created successfully! Redirecting...</span>
+            </div>
+
+            <button type="submit" class="btn btn-primary login-btn">
+              <span>Create Account</span>
+              <i data-lucide="check"></i>
+            </button>
+          </form>
+
+          <div class="auth-navigation">
+            <p>Already have an account? <a href="#" id="goto-login">Sign In</a></p>
+          </div>
         </div>
 
-        <div id="login-error" class="login-error-msg" style="display: none;">
-          <i data-lucide="alert-circle"></i>
-          <span>Invalid username or password.</span>
-        </div>
-
-        <button type="submit" class="btn btn-primary login-btn">
-          <span>Secure Sign In</span>
-          <i data-lucide="arrow-right"></i>
-        </button>
-      </form>
-      
-      <div class="login-hint">
-        <p>Hint: Use username <strong>admin</strong> and password <strong>admin123</strong> to login.</p>
       </div>
     </div>
   </div>
@@ -74,7 +258,20 @@
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
         <div class="logo">
-          <i data-lucide="layers" class="logo-icon"></i>
+          <svg class="logo-icon-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="sidebar-blue-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#3b82f6" />
+                <stop offset="100%" stop-color="#06b6d4" />
+              </linearGradient>
+              <linearGradient id="sidebar-white-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ffffff" />
+                <stop offset="100%" stop-color="#cbd5e1" />
+              </linearGradient>
+            </defs>
+            <path d="M 30,50 C 30,25 45,20 50,45 C 55,70 70,75 70,50 C 70,25 55,20 50,45 C 45,70 30,75 30,50 Z" stroke="url(#sidebar-blue-grad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+            <path d="M 50,15 C 65,30 65,50 50,65 C 35,50 35,30 50,15 Z" stroke="url(#sidebar-white-grad)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+          </svg>
           <span>Amirtha Knits</span>
         </div>
         <button class="sidebar-close-btn" id="sidebar-close-btn">
@@ -144,6 +341,12 @@
         </div>
 
         <div class="topbar-right">
+          <!-- Theme Toggle -->
+          <button class="theme-toggle-btn-topbar" id="topbar-theme-toggle" aria-label="Toggle Theme">
+            <i data-lucide="sun" class="theme-icon-sun"></i>
+            <i data-lucide="moon" class="theme-icon-moon" style="display: none;"></i>
+          </button>
+
           <!-- Live Clock -->
           <div class="system-time">
             <i data-lucide="clock" class="time-icon"></i>

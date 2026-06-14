@@ -227,6 +227,19 @@ export const updateProfile = (profileData) => {
   saveDB(db);
 };
 
+export const registerProfile = (ownerName, username, email, password, contact) => {
+  const db = getDB();
+  db.profile = {
+    ...db.profile,
+    ownerName,
+    username,
+    email,
+    password,
+    contact
+  };
+  saveDB(db);
+};
+
 export const updateTheme = (newTheme) => {
   const db = getDB();
   db.profile.theme = newTheme;

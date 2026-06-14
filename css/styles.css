@@ -126,7 +126,7 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
-   LOGIN PORTAL SCREEN
+   AUTHENTICATION & PORTAL SCREEN (REDESIGNED)
    ========================================================================== */
 .login-container {
   display: flex;
@@ -145,64 +145,281 @@ body.light-mode .login-container {
   background: radial-gradient(circle at 10% 20%, #f3f4f6 0%, #e5e7eb 90.2%);
 }
 
-.login-card {
+.auth-card {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
   width: 100%;
-  max-width: 440px;
-  background-color: rgba(15, 22, 36, 0.8);
+  max-width: 920px;
+  min-height: 560px;
+  background-color: rgba(15, 22, 36, 0.7);
   backdrop-filter: blur(16px);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 40px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-  animation: fadeIn 0.4s ease;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-body.light-mode .login-card {
-  background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+body.light-mode .auth-card {
+  background-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.08);
 }
 
-.login-brand {
-  text-align: center;
-  margin-bottom: 32px;
+/* Left Branding Column */
+.auth-branding {
+  padding: 48px;
+  background: linear-gradient(135deg, #090d16 0%, #162035 100%);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+  border-right: 1px solid var(--border-color);
 }
 
-.brand-icon {
-  width: 42px;
-  height: 42px;
+body.light-mode .auth-branding {
+  background: linear-gradient(135deg, #e0f2fe 0%, #eff6ff 100%);
+}
+
+.branding-logo-wrapper {
+  width: 68px;
+  height: 68px;
+  margin-bottom: 24px;
+  z-index: 2;
+}
+
+.branding-logo-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.3));
+}
+
+.branding-text {
+  z-index: 2;
+  width: 100%;
+}
+
+.branding-welcome {
+  font-family: var(--font-family-sans);
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
   color: var(--color-primary);
-  margin-bottom: 12px;
+  margin-bottom: 8px;
+  display: block;
 }
 
-.login-brand h1 {
+.branding-title {
   font-family: var(--font-family-display);
-  font-size: 26px;
+  font-size: 38px;
   font-weight: 800;
-  letter-spacing: -0.5px;
+  letter-spacing: -1px;
+  margin-bottom: 12px;
+  line-height: 1.1;
   background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 4px;
 }
 
-body.light-mode .login-brand h1 {
+body.light-mode .branding-title {
   background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.login-brand p {
+.branding-subtitle {
+  font-family: var(--font-family-sans);
+  font-size: 15px;
+  font-weight: 450;
   color: var(--text-secondary);
-  font-size: 13px;
-  font-weight: 500;
+  line-height: 1.4;
+  margin-bottom: 16px;
 }
 
+body.light-mode .branding-subtitle {
+  color: #1e293b;
+}
+
+/* Branding Units Info block */
+.branding-units {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+  width: 100%;
+}
+
+.unit-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: rgba(59, 130, 246, 0.06);
+  border: 1px solid rgba(59, 130, 246, 0.12);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: all var(--transition-fast);
+}
+
+.unit-badge:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+body.light-mode .unit-badge {
+  background-color: rgba(30, 58, 138, 0.04);
+  border-color: rgba(30, 58, 138, 0.08);
+  color: #1e3a8a;
+}
+
+.unit-badge i, .unit-badge svg {
+  width: 15px;
+  height: 15px;
+  color: var(--color-primary);
+}
+
+/* Feature List Card */
+.branding-features-card {
+  margin-top: 32px;
+  width: 100%;
+  background: rgba(15, 22, 36, 0.4);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 2;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+body.light-mode .branding-features-card {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(30, 58, 138, 0.08);
+  box-shadow: 0 4px 20px rgba(30, 58, 138, 0.04);
+}
+
+.branding-features-card .feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.branding-features-card .feature-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--color-success);
+  background-color: var(--color-success-bg);
+  border: 1px solid var(--color-success-border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+}
+
+.branding-features-card .feature-item span {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+body.light-mode .branding-features-card .feature-item span {
+  color: #1e293b;
+}
+
+/* Background Knits Line Art */
+.branding-bg-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.15;
+  background-image: radial-gradient(var(--color-primary) 1px, transparent 0);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+body.light-mode .branding-bg-lines {
+  opacity: 0.3;
+}
+
+/* Right Form Column */
+.auth-form-container {
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.mobile-brand-header {
+  display: none;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.mobile-logo-svg {
+  width: 44px;
+  height: 44px;
+  margin-bottom: 10px;
+}
+
+.mobile-brand-header h2 {
+  font-family: var(--font-family-display);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.mobile-brand-header p {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.mobile-units {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.auth-screen {
+  animation: fadeIn 0.4s ease;
+}
+
+.auth-header {
+  margin-bottom: 28px;
+}
+
+.auth-header h3 {
+  font-family: var(--font-family-display);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.auth-header p {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Input Styles */
 .input-with-icon {
   position: relative;
   width: 100%;
 }
 
-.input-with-icon i {
+.input-with-icon i, .input-with-icon svg {
   position: absolute;
   left: 14px;
   top: 50%;
@@ -216,6 +433,32 @@ body.light-mode .login-brand h1 {
   padding-left: 44px;
 }
 
+.password-toggle-btn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  border: none;
+  transition: color var(--transition-fast);
+}
+
+.password-toggle-btn:hover {
+  color: var(--color-primary);
+}
+
+.password-toggle-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
 .login-options {
   display: flex;
   justify-content: space-between;
@@ -227,18 +470,30 @@ body.light-mode .login-brand h1 {
 .checkbox-label {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   cursor: pointer;
   color: var(--text-secondary);
 }
 
 .checkbox-label input {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   background-color: var(--bg-tertiary);
   cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.checkbox-label input:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+}
+
+.checkbox-label span {
+  font-size: 14px;
+  font-weight: 500;
+  user-select: none;
 }
 
 .login-btn {
@@ -249,6 +504,7 @@ body.light-mode .login-brand h1 {
   align-items: center;
   justify-content: center;
   gap: 8px;
+  margin-top: 10px;
 }
 
 .login-error-msg {
@@ -266,12 +522,138 @@ body.light-mode .login-brand h1 {
   animation: slideDown 0.2s ease;
 }
 
-.login-hint {
-  margin-top: 24px;
+.auth-navigation {
+  margin-top: 20px;
   text-align: center;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.auth-navigation a {
+  color: var(--color-primary);
+  font-weight: 600;
+  transition: text-decoration var(--transition-fast);
+}
+
+.auth-navigation a:hover {
+  text-decoration: underline;
+}
+
+/* Password Strength Indicator */
+.password-strength-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  animation: slideDown 0.2s ease;
+}
+
+.strength-bar-track {
+  width: 100%;
+  height: 5px;
+  background-color: var(--bg-tertiary);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.strength-bar {
+  height: 100%;
+  width: 0;
+  background-color: var(--color-danger);
+  border-radius: var(--radius-sm);
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.strength-label {
   font-size: 11px;
-  color: var(--text-muted);
-  line-height: 1.4;
+  font-weight: 600;
+  transition: color var(--transition-fast);
+}
+
+/* Floating Portal Theme Toggle */
+.theme-toggle-btn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: all var(--transition-normal);
+  z-index: 1010;
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: scale(1.08);
+}
+
+body.light-mode .theme-toggle-btn {
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Topbar Theme Toggle Button */
+.theme-toggle-btn-topbar {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.theme-toggle-btn-topbar:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: rgba(59, 130, 246, 0.05);
+}
+
+/* Sidebar Logo Image */
+.logo-icon-svg {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+/* Custom logo white loop override for Light Mode contrast */
+body.light-mode .logo-icon-svg path:last-child {
+  stroke: var(--text-secondary) !important;
+}
+body.light-mode .branding-logo-svg path:last-child {
+  stroke: #1e3a8a !important;
+}
+body.light-mode .mobile-logo-svg path:last-child {
+  stroke: #1e3a8a !important;
+}
+
+/* Responsive auth card adjustments */
+@media (max-width: 868px) {
+  .auth-card {
+    grid-template-columns: 1fr;
+    max-width: 460px;
+    min-height: auto;
+  }
+  .auth-branding {
+    display: none;
+  }
+  .mobile-brand-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 /* ==========================================================================
